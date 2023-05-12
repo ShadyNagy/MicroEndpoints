@@ -17,9 +17,4 @@ public class DeleteAttribute : Attribute, IHttpMethodAttribute
   {
     app.MapDelete(Template, requestDelegate);
   }
-
-  internal static DeleteAttribute GetAttributeFromMethod(MethodInfo method)
-  {
-    return method.GetCustomAttribute<DeleteAttribute>();
-  }
 }

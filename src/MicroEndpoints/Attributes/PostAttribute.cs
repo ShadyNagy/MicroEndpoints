@@ -17,10 +17,4 @@ public class PostAttribute : Attribute, IHttpMethodAttribute
   {
     app.MapPost(Template, requestDelegate);
   }
-
-  internal static PostAttribute GetAttributeFromMethod(MethodInfo method)
-  {
-    return method.GetCustomAttribute<PostAttribute>();
-  }
-
 }

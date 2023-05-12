@@ -14,26 +14,44 @@ public abstract class EndpointConfigurationBase : IEndpointConfiguration
 
   public void ConfigureEndpoint(WebApplication app)
   {
-    var httpMethodAttributes = new List<IHttpMethodAttribute>
-        {
-            GetAttribute.GetAttributeFromMethod(GetType().GetMethod(HandleName)!),
-            PostAttribute.GetAttributeFromMethod(GetType().GetMethod(HandleName)!),
-            PutAttribute.GetAttributeFromMethod(GetType().GetMethod(HandleName)!),
-            DeleteAttribute.GetAttributeFromMethod(GetType().GetMethod(HandleName)!)
-        };
+	  var method = GetType().GetMethod(HandleName);
+	  if (method == null)
+	  {
+		  throw new Exception($"No method named {HandleName} found in {GetType().Name}");
+	  }
 
-    var requestDelegate = CreateRequestDelegate();
+	  var httpMethodAttributes = method.GetCustomAttributes().OfType<IHttpMethodAttribute>();
 
-    foreach (var httpMethodAttribute in httpMethodAttributes)
-    {
-      if (httpMethodAttribute != null)
-      {
-        httpMethodAttribute.ConfigureEndpoint(app, requestDelegate);
-      }
-    }
+	  foreach (var httpMethodAttribute in httpMethodAttributes)
+	  {
+		  var requestDelegate = CreateRequestDelegate();
+		  httpMethodAttribute.ConfigureEndpoint(app, requestDelegate);
+	  }
   }
+	//public void ConfigureEndpoint(WebApplication app)
+	//{
+	// var method = GetType().GetMethod(HandleName);
+	// if (method == null)
+	// {
+	//  throw new Exception($"No method named {HandleName} found in {GetType().Name}");
+	// }
 
-  public static ActionResult Ok(object? result = null)
+	// var httpMethodAttribute = method.GetCustomAttributes()
+	//  .FirstOrDefault(a => a is IHttpMethodAttribute) as IHttpMethodAttribute;
+
+	// if (httpMethodAttribute == null)
+	// {
+	//  return;
+	// }
+
+	// if (httpMethodAttribute.GetType().Name is nameof(GetAttribute) or nameof(PostAttribute) or nameof(PutAttribute) or nameof(DeleteAttribute))
+	// {
+	//	var requestDelegate = CreateRequestDelegate();
+	//	httpMethodAttribute.ConfigureEndpoint(app, requestDelegate);
+	//}
+	//}
+
+	public static ActionResult Ok(object? result = null)
   {
     return new OkObjectResult(result);
   }

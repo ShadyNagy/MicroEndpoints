@@ -17,9 +17,4 @@ public class PutAttribute : Attribute, IHttpMethodAttribute
   {
     app.MapPut(Template, requestDelegate);
   }
-
-  internal static PutAttribute GetAttributeFromMethod(MethodInfo method)
-  {
-    return method.GetCustomAttribute<PutAttribute>();
-  }
 }

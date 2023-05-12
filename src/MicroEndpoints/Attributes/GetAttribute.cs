@@ -17,9 +17,4 @@ public class GetAttribute : Attribute, IHttpMethodAttribute
   {
     app.MapGet(Template, requestDelegate);
   }
-
-  internal static GetAttribute GetAttributeFromMethod(MethodInfo method)
-  {
-    return method.GetCustomAttribute<GetAttribute>();
-  }
 }

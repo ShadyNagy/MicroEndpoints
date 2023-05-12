@@ -1,4 +1,5 @@
-﻿using MicroEndpoints.FluentGenerics;
+﻿using MicroEndpoints.Attributes;
+using MicroEndpoints.FluentGenerics;
 using Microsoft.AspNetCore.Mvc;
 using MicroEndpoints.EndpointApp.DomainModel;
 
@@ -18,7 +19,7 @@ public class Delete : EndpointBaseAsync
   /// <summary>
   /// Deletes an Author
   /// </summary>
-  [HttpDelete("api/[namespace]/{id}")]
+  [Delete("api/Authors/{id}")]
   public override async Task<ActionResult> HandleAsync([FromRoute] DeleteAuthorRequest request, CancellationToken cancellationToken)
   {
     var author = await _repository.GetByIdAsync(request.Id, cancellationToken);
