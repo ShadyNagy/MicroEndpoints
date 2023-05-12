@@ -26,7 +26,7 @@ public class Stream : EndpointBaseAsync
   /// Stream all authors with a one second delay between entries
   /// </summary>
   [Get("api/authors/stream")]
-  public override async IAsyncEnumerable<AuthorListResult> HandleAsync([EnumeratorCancellation] CancellationToken cancellationToken)
+  public override async IAsyncEnumerable<AuthorListResult> HandleAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
   {
     var result = await _repository.ListAllAsync(cancellationToken);
     foreach (var author in result)

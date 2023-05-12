@@ -6,7 +6,7 @@ using MicroEndpoints.EndpointApp.DomainModel;
 namespace MicroEndpoints.EndpointApp.Endpoints.Authors;
 
 public class Delete : EndpointBaseAsync
-    .WithRequest<DeleteAuthorRequest>
+    .WithRequest<int>
     .WithActionResult
 {
   private readonly IAsyncRepository<Author> _repository;
@@ -19,14 +19,14 @@ public class Delete : EndpointBaseAsync
   /// <summary>
   /// Deletes an Author
   /// </summary>
-  [HttpDelete("api/authors/{id}")]
-  public override async Task<ActionResult> HandleAsync([FromRoute] DeleteAuthorRequest request, CancellationToken cancellationToken)
+  [Delete("api/authors/{id:int}")]
+  public override async Task<ActionResult> HandleAsync([FromRoute] int id, CancellationToken cancellationToken = default)
   {
-    var author = await _repository.GetByIdAsync(request.Id, cancellationToken);
+    var author = await _repository.GetByIdAsync(id, cancellationToken);
 
     if (author is null)
     {
-      return NotFound(request.Id.ToString());
+      return NotFound(id.ToString());
     }
 
     await _repository.DeleteAsync(author, cancellationToken);
