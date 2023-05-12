@@ -1,3 +1,10 @@
+[![publish to nuget](https://github.com/ShadyNagy/MicroEndpoints/actions/workflows/nugt-publish.yml/badge.svg)](https://github.com/ShadyNagy/MicroEndpoints/actions/workflows/nugt-publish.yml)
+[![MicroEndpoints on NuGet](https://img.shields.io/nuget/v/MicroEndpoints?label=MicroEndpoints)](https://www.nuget.org/packages/MicroEndpoints/)
+[![NuGet](https://img.shields.io/nuget/dt/MicroEndpoints)](https://www.nuget.org/packages/MicroEndpoints)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/ShadyNagy/MicroEndpoints/blob/main/LICENSE)
+[![paypal](https://img.shields.io/badge/PayPal-tip%20me-green.svg?logo=paypal)](https://www.paypal.me/shadynagy)
+
+
 # MicroEndpoints
 
 MicroEndpoints is a .NET library that simplifies creating HTTP endpoints in a minimalistic and clean manner. It's designed to work with .NET 6's Minimal APIs. 

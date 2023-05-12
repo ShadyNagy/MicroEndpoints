@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>MicroEndpoints</id>
+    <title>Micro Endpoints</title>
+    <version>1.0.0</version>
+    <authors>Shady Nagy</authors>
+    <description>
+      MicroEndpoints is a .NET library designed to simplify the process of creating HTTP endpoints. It is built to leverage the power of .NET 6's Minimal APIs, providing an easy and clean approach to building lightweight HTTP APIs. The library offers support for both asynchronous and synchronous endpoint operations, enabling developers to create highly flexible and efficient web services.
+    </description>
+    <packageType name="Dependency" />
+    <dependencies>
+      <group targetFramework=".NETFramework6.0" />
+      <group targetFramework=".NETFramework7.0" />
+    </dependencies>
+    <language>en-US</language>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/ShadyNagy/MicroEndpoints</projectUrl>
+    <releaseNotes>Initial release.</releaseNotes>
+    <tags>dotnet csharp .NET6 MinimalAPIs API HTTP Endpoints Microservices Asynchronous Synchronous OpenAPI</tags>
+    <icon>icon.png</icon>
+    <copyright>Copyright 2023 (c) Shady Nagy. All rights reserved.</copyright>
+    <readme>README.md</readme>
+  </metadata>
+  <files>
+    <file src="src\MicroEndpoints\bin\Release\net6.0\MicroEndpoints.dll" target="lib\net6.0" />
+    <file src="src\MicroEndpoints\bin\Release\net7.0\MicroEndpoints.dll" target="lib\net7.0" />
+    <file src="icon.png" />
+    <file src="README.md" />
+  </files>
+</package>
