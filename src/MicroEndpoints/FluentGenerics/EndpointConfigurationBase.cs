@@ -1,6 +1,5 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
-using MicroEndpoints.Attributes;
 using MicroEndpoints.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -28,30 +27,8 @@ public abstract class EndpointConfigurationBase : IEndpointConfiguration
 		  httpMethodAttribute.ConfigureEndpoint(app, requestDelegate);
 	  }
   }
-	//public void ConfigureEndpoint(WebApplication app)
-	//{
-	// var method = GetType().GetMethod(HandleName);
-	// if (method == null)
-	// {
-	//  throw new Exception($"No method named {HandleName} found in {GetType().Name}");
-	// }
 
-	// var httpMethodAttribute = method.GetCustomAttributes()
-	//  .FirstOrDefault(a => a is IHttpMethodAttribute) as IHttpMethodAttribute;
-
-	// if (httpMethodAttribute == null)
-	// {
-	//  return;
-	// }
-
-	// if (httpMethodAttribute.GetType().Name is nameof(GetAttribute) or nameof(PostAttribute) or nameof(PutAttribute) or nameof(DeleteAttribute))
-	// {
-	//	var requestDelegate = CreateRequestDelegate();
-	//	httpMethodAttribute.ConfigureEndpoint(app, requestDelegate);
-	//}
-	//}
-
-	public static ActionResult Ok(object? result = null)
+  public static ActionResult Ok(object? result = null)
   {
     return new OkObjectResult(result);
   }
@@ -136,28 +113,9 @@ public abstract class EndpointConfigurationBase : IEndpointConfiguration
   {
 	  var types = methodInfo.GetParameters().Select(p => p.ParameterType).ToList();
 
-	  // If the method has a return type, add it to the list of types
 	  if (methodInfo.ReturnType != typeof(void))
 		  types.Add(methodInfo.ReturnType);
 
 	  return Expression.GetDelegateType(types.ToArray());
   }
-
-	//protected virtual Delegate CreateRequestDelegate()
-	//{
-	//	var type = GetType();
-	//	var method = type.GetMethod(HandleName);
-	//	if (method == null)
-	//	{
-	//		throw new Exception($"Could not find method {HandleName}");
-	//	}
-
-	//	var delegateParams = method.GetParameters()
-	//		.Select(p => Expression.Parameter(p.ParameterType, p.Name))
-	//		.ToArray();
-
-	//	var call = Expression.Call(Expression.Constant(this), method, delegateParams);
-
-	//	return Expression.Lambda(call, delegateParams).Compile();
-	//}
 }
