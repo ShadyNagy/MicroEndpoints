@@ -9,11 +9,11 @@ public class ListJsonFile : EndpointBaseAsync
     .WithoutRequest
     .WithActionResult
 {
-  private readonly IAsyncRepository<Author> repository;
+  private readonly IAsyncRepository<Author> _repository;
 
   public ListJsonFile(IAsyncRepository<Author> repository)
   {
-    this.repository = repository;
+    _repository = repository;
   }
 
   /// <summary>
@@ -23,7 +23,7 @@ public class ListJsonFile : EndpointBaseAsync
   public override async Task<ActionResult> HandleAsync(
       CancellationToken cancellationToken = default)
   {
-    var result = (await repository.ListAllAsync(cancellationToken)).ToList();
+    var result = (await _repository.ListAllAsync(cancellationToken)).ToList();
 
     var streamData = JsonSerializer.SerializeToUtf8Bytes(result);
     return File(streamData, "text/json", "authors.json");

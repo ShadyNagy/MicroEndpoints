@@ -10,15 +10,15 @@ public class List : EndpointBaseAsync
     .WithRequest<AuthorListRequest>
     .WithResult<IEnumerable<AuthorListResult>>
 {
-  private readonly IAsyncRepository<Author> repository;
-  private readonly IMapper mapper;
+  private readonly IAsyncRepository<Author> _repository;
+  private readonly IMapper _mapper;
 
   public List(
       IAsyncRepository<Author> repository,
       IMapper mapper)
   {
-    this.repository = repository;
-    this.mapper = mapper;
+    _repository = repository;
+    _mapper = mapper;
   }
 
   /// <summary>
@@ -37,8 +37,8 @@ public class List : EndpointBaseAsync
     {
       request.Page = 1;
     }
-    var result = (await repository.ListAllAsync(request.PerPage, request.Page, cancellationToken))
-        .Select(i => mapper.Map<AuthorListResult>(i));
+    var result = (await _repository.ListAllAsync(request.PerPage, request.Page, cancellationToken))
+        .Select(i => _mapper.Map<AuthorListResult>(i));
 
     return result;
   }
