@@ -19,7 +19,7 @@ public class ListJsonFile : EndpointBaseAsync
   /// <summary>
   /// List all Authors as a JSON file
   /// </summary>
-  [HttpGet("api/[namespace]/Json")]
+  [HttpGet("api/authors/Json")]
   public override async Task<ActionResult> HandleAsync(
       CancellationToken cancellationToken = default)
   {

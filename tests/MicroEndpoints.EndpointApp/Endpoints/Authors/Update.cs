@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MicroEndpoints.Attributes;
 using MicroEndpoints.FluentGenerics;
 using Microsoft.AspNetCore.Mvc;
 using MicroEndpoints.EndpointApp.DomainModel;
@@ -22,7 +23,7 @@ public class Update : EndpointBaseAsync
   /// <summary>
   /// Updates an existing Author
   /// </summary>
-  [HttpPut("api/[namespace]")]
+  [Put("api/authors")]
   public override async Task<ActionResult<UpdatedAuthorResult>> HandleAsync([FromBody] UpdateAuthorCommand request, CancellationToken cancellationToken)
   {
     var author = await _repository.GetByIdAsync(request.Id, cancellationToken);

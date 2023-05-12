@@ -20,7 +20,7 @@ public class Create : EndpointBaseAsync
     _mapper = mapper;
   }
 
-  [Post("api/Authors")]
+  [Post("api/authors")]
   public override async Task<ActionResult> HandleAsync([FromBody] CreateAuthorCommand request, CancellationToken cancellationToken)
   {
     var author = new Author();

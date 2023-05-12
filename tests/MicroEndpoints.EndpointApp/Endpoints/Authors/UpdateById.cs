@@ -23,7 +23,7 @@ public class UpdateById : EndpointBaseAsync
   /// <summary>
   /// Updates an existing Author
   /// </summary>
-  [HttpPut("api/[namespace]/{id}")]
+  [Put("api/authors/{id}")]
   public override async Task<ActionResult<UpdatedAuthorByIdResult>> HandleAsync([FromMultiSource]UpdateAuthorCommandById request,
     CancellationToken cancellationToken)
   {

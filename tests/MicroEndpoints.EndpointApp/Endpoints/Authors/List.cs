@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MicroEndpoints.Attributes;
 using MicroEndpoints.FluentGenerics;
 using Microsoft.AspNetCore.Mvc;
 using MicroEndpoints.EndpointApp.DomainModel;
@@ -23,7 +24,7 @@ public class List : EndpointBaseAsync
   /// <summary>
   /// List all Authors
   /// </summary>
-  [HttpGet("api/Authors")]
+  [HttpGet("api/authors")]
   public override async Task<IEnumerable<AuthorListResult>> HandleAsync(
       [FromQuery] AuthorListRequest request,
       CancellationToken cancellationToken = default)

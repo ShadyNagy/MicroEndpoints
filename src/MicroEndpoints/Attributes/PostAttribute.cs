@@ -1,6 +1,5 @@
 ﻿using MicroEndpoints.Interfaces;
 using Microsoft.AspNetCore.Builder;
-using System.Reflection;
 
 namespace MicroEndpoints.Attributes;
 

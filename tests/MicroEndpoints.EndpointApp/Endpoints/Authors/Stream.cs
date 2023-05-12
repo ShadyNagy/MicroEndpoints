@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using AutoMapper;
+using MicroEndpoints.Attributes;
 using MicroEndpoints.FluentGenerics;
 using Microsoft.AspNetCore.Mvc;
 using MicroEndpoints.EndpointApp.DomainModel;
@@ -24,7 +25,7 @@ public class Stream : EndpointBaseAsync
   /// <summary>
   /// Stream all authors with a one second delay between entries
   /// </summary>
-  [HttpGet("api/[namespace]/stream")]
+  [Get("api/authors/stream")]
   public override async IAsyncEnumerable<AuthorListResult> HandleAsync([EnumeratorCancellation] CancellationToken cancellationToken)
   {
     var result = await repository.ListAllAsync(cancellationToken);
