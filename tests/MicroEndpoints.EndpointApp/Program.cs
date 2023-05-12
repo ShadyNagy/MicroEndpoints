@@ -25,13 +25,13 @@ if (!app.Environment.IsDevelopment())
   app.UseHsts();
 }
 
-app.UseMicroEndpoints();
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseMicroEndpoints();
 
 app.Run();
