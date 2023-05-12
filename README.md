@@ -1,18 +1,31 @@
 # MicroEndpoints
 
-MicroEndpoints is a .NET library that simplifies creating HTTP endpoints in a minimalistic and clean manner. It's designed to work with .NET 6's Minimal APIs but can also be used in a traditional MVC setup.
+MicroEndpoints is a .NET library that simplifies creating HTTP endpoints in a minimalistic and clean manner. It's designed to work with .NET 6's Minimal APIs. 
+
+Minimal APIs in .NET 6 offer an easy way to build HTTP APIs with the flexibility to add more features as your project grows. They are great for creating HTTP APIs where you typically send and receive HTTP requests and responses. These APIs are often used with single-page apps, mobile clients, and for public HTTP APIs.
+
+Here are a few benefits of Minimal APIs:
+
+- Simplicity: With Minimal APIs, you can use a single line of code to express an API endpoint, making it easy to understand.
+- Productivity: Minimal APIs require less code and less ceremony, which leads to a productivity gain.
+- Performance: Minimal APIs are built on top of the same high-performance components as the rest of ASP.NET Core.
+
+For more detailed information, please refer to the [Microsoft Documentation on Minimal APIs](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis?view=aspnetcore-6.0).
+
+With MicroEndpoints, you can leverage the simplicity and performance of Minimal APIs with a structured and easy-to-use model, making your development process even more efficient.
+
 
 ## Getting Started
 
 To install the library, you can use the .NET CLI:
 
-~~~shell
+```shell
 dotnet add package MicroEndpoints
-~~~
+```
 
 After installing the package, make sure to include the following line in your `Program.cs`:
 
-~~~csharp
+```csharp
 //...
 builder.Services.AddMicroEndpoints(Assembly.GetAssembly(typeof(Program)));
 //...
@@ -21,7 +34,7 @@ var app = builder.Build();
 app.UseMicroEndpoints();
 
 app.Run();
-~~~
+```
 
 # Endpoint Types
 
@@ -31,7 +44,7 @@ MicroEndpoints provides the flexibility to create synchronous or asynchronous en
 
 If you don't have any I/O-bound work that would benefit from asynchrony, you can create synchronous endpoints. Here's an example:
 
-~~~csharp
+```csharp
 public class MySyncEndpoint : EndpointBaseSync
     .WithRequest<MyRequest>
     .WithIResult
@@ -41,7 +54,7 @@ public class MySyncEndpoint : EndpointBaseSync
     // Implementation...
   }
 }
-~~~
+```
 
 In the example above, `MySyncEndpoint` is a synchronous endpoint that handles a `MyRequest` request and returns an `IResult`.
 
@@ -49,7 +62,7 @@ In the example above, `MySyncEndpoint` is a synchronous endpoint that handles a 
 
 If you're performing I/O-bound operations, such as network requests or database queries, you should use asynchronous endpoints. Here's an example:
 
-~~~csharp
+```csharp
 public class MyAsyncEndpoint : EndpointBaseAsync
     .WithRequest<MyRequest>
     .WithIResult
@@ -59,7 +72,7 @@ public class MyAsyncEndpoint : EndpointBaseAsync
     // Implementation...
   }
 }
-~~~
+```
 
 In this example, `MyAsyncEndpoint` is an asynchronous endpoint that handles a `MyRequest` request and returns an `IResult`.
 
@@ -69,7 +82,7 @@ The result of an endpoint can be of any type. However, it's recommended to use `
 
 If you want to return a custom type, you can do so by specifying the type when inheriting from `EndpointBaseAsync` or `EndpointBaseSync`. Here's an example:
 
-~~~csharp
+```csharp
 public class MyEndpoint : EndpointBaseAsync
     .WithRequest<MyRequest>
     .WithResult<MyResponse> // MyResponse is a custom class
@@ -79,7 +92,7 @@ public class MyEndpoint : EndpointBaseAsync
     // Implementation...
   }
 }
-~~~
+```
 
 In the example above, `MyEndpoint` is an asynchronous endpoint that handles a `MyRequest` request and returns a `MyResponse` result.
 
@@ -89,7 +102,7 @@ If you need to use services from the dependency injection (DI) container in your
 
 You can use the `GetService` method from the `IServiceProvider` to retrieve your services. Here's an example:
 
-~~~csharp
+```csharp
 public override async Task<IResult> HandleAsync([FromServices] IServiceProvider serviceProvider, MyRequest request, CancellationToken cancellationToken = default)
 {
   // Get services from the DI container
@@ -98,7 +111,7 @@ public override async Task<IResult> HandleAsync([FromServices] IServiceProvider 
 
   // Implementation...
 }
-~~~
+```
 
 In the example above, `IAsyncRepository<Author>` and `IMapper` are being retrieved from the service provider, which is injected into the method by the framework.
 
@@ -108,14 +121,14 @@ Remember to add a reference to the `Microsoft.Extensions.DependencyInjection` na
 
 MicroEndpoints provides a base class `EndpointBaseAsync` that you can inherit from to define your own endpoints. Here's how you can use it:
 
-~~~csharp
+```csharp
 public class Get : EndpointBaseAsync
       .WithRequest<int>
       .WithIResult
 {
   //...
 }
-~~~
+```
 
 In this example, the `Get` class is an endpoint that expects a request with an integer parameter and returns an `IResult` type. The actual handling of the request is done in the `HandleAsync` method which needs to be overridden.
 
@@ -124,7 +137,7 @@ Here are some examples:
 
 ### Get Endpoint
 
-~~~csharp
+```csharp
 public class Get : EndpointBaseAsync
       .WithRequest<int>
       .WithIResult
@@ -144,11 +157,11 @@ public class Get : EndpointBaseAsync
     // Implementation...
   }
 }
-~~~
+```
 
 ### Post Endpoint
 
-~~~csharp
+```csharp
 public class Create : EndpointBaseAsync
     .WithRequest<CreateAuthorCommand>
     .WithIResult
@@ -168,11 +181,11 @@ public class Create : EndpointBaseAsync
     // Implementation...
   }
 }
-~~~
+```
 
 ### Put Endpoint
 
-~~~csharp
+```csharp
 public class Create : EndpointBaseAsync
     .WithRequest<CreateAuthorCommand>
     .WithIResult
@@ -192,11 +205,11 @@ public class Create : EndpointBaseAsync
     // Implementation...
   }
 }
-~~~
+```
 
 ### Delete Endpoint
 
-~~~csharp
+```csharp
 public class Delete : EndpointBaseAsync
     .WithRequest<int>
     .WithIResult
@@ -214,9 +227,16 @@ public class Delete : EndpointBaseAsync
     // Implementation...
   }
 }
-~~~
+```
 
-You can see more examples in the [examples](./examples) directory.
+You can see more examples in the [examples](https://github.com/ShadyNagy/MicroEndpoints/tree/main/tests/MicroEndpoints.EndpointApp) directory.
+
+# Acknowledgements
+
+We would like to express our gratitude towards [Ardalis (Steve Smith)](https://github.com/ardalis) for creating the [Ardalis.Endpoints](https://github.com/ardalis/ApiEndpoints) package. His work served as an inspiration and provided a solid foundation for the development of MicroEndpoints. 
+
+We highly recommend checking out his [package](https://github.com/ardalis/ApiEndpoints) and other [contributions](https://github.com/ardalis) to the .NET community.
+
 
 ## Contributing
 
