@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using MicroEndpoints.Attributes;
 using MicroEndpoints.FluentGenerics;
 using Microsoft.AspNetCore.Mvc;
 using MicroEndpoints.EndpointApp.DomainModel;
@@ -19,9 +20,8 @@ public class ListJsonFile : EndpointBaseAsync
   /// <summary>
   /// List all Authors as a JSON file
   /// </summary>
-  [HttpGet("api/authors/Json")]
-  public override async Task<ActionResult> HandleAsync(
-      CancellationToken cancellationToken = default)
+  [Get("api/authors/Json")]
+  public override async Task<ActionResult> HandleAsync(CancellationToken cancellationToken = default)
   {
     var result = (await _repository.ListAllAsync(cancellationToken)).ToList();
 
