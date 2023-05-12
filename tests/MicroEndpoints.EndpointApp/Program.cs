@@ -1,4 +1,3 @@
-using MicroEndpoints.EndpointApp;
 using MicroEndpoints.EndpointApp.DataAccess;
 using MicroEndpoints.EndpointApp.DomainModel;
 using Microsoft.EntityFrameworkCore;

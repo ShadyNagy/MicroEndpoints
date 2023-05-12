@@ -38,7 +38,7 @@ public class DeleteEndpoint : IClassFixture<CustomWebApplicationFactory<App>>
     int nonexistingAuthorId = 2222;
     string route = Routes.Authors.Delete(nonexistingAuthorId);
 
-    await _client.DeleteAndEnsureNotFound(route);
+    await _client.DeleteAndEnsureNotFoundAsync(route);
   }
 
   [Fact]

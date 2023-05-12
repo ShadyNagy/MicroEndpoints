@@ -17,7 +17,7 @@ public class ListPaginatedEndpoint : IClassFixture<CustomWebApplicationFactory<A
   [Fact]
   public async Task Page1PerPage1_ShouldReturnFirstAuthor()
   {
-    var result = await _client.GetAndDeserialize<IEnumerable<Author>>(Routes.Authors.List(1, 1));
+    var result = await _client.GetAndDeserializeAsync<IEnumerable<Author>>(Routes.Authors.List(1, 1));
 
     Assert.NotNull(result);
     Assert.Single(result);

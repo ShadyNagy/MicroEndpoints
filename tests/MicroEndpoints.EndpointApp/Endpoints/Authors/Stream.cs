@@ -11,12 +11,10 @@ public class Stream : EndpointBaseAsync
     .WithoutRequest
     .WithAsyncEnumerableResult<AuthorListResult>
 {
-  private readonly IAsyncRepository<Author> _repository;
-  private readonly IMapper _mapper;
+  private IAsyncRepository<Author> _repository;
+  private IMapper _mapper;
 
-  public Stream(
-      IAsyncRepository<Author> repository,
-      IMapper mapper)
+  public Stream(IAsyncRepository<Author> repository, IMapper mapper)
   {
     _repository = repository;
     _mapper = mapper;
@@ -26,9 +24,12 @@ public class Stream : EndpointBaseAsync
   /// Stream all authors with a one second delay between entries
   /// </summary>
   [Get("api/authors/stream")]
-  public override async IAsyncEnumerable<AuthorListResult> HandleAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
+  public override async IAsyncEnumerable<AuthorListResult> HandleAsync([FromServices] IServiceProvider serviceProvider, [EnumeratorCancellation] CancellationToken cancellationToken = default)
   {
-    var result = await _repository.ListAllAsync(cancellationToken);
+	  _repository = serviceProvider.GetService<IAsyncRepository<Author>>()!;
+	  _mapper = serviceProvider.GetService<IMapper>()!;
+
+		var result = await _repository.ListAllAsync(cancellationToken);
     foreach (var author in result)
     {
       yield return _mapper.Map<AuthorListResult>(author);

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace MicroEndpoints.FluentGenerics;
 
@@ -16,14 +16,9 @@ public static class EndpointBaseSync
       public abstract void Handle(TRequest request);
     }
 
-    public abstract class WithActionResult<TResponse> : EndpointConfigurationSyncBase
+    public abstract class WithIResult : EndpointConfigurationSyncBase
     {
-      public abstract ActionResult<TResponse> Handle(TRequest request);
-    }
-
-    public abstract class WithActionResult : EndpointConfigurationSyncBase
-    {
-      public abstract ActionResult Handle(TRequest request);
+      public abstract IResult Handle(TRequest request);
     }
   }
 
@@ -39,14 +34,9 @@ public static class EndpointBaseSync
       public abstract void Handle();
     }
 
-    public abstract class WithActionResult<TResponse> : EndpointConfigurationSyncBase
+    public abstract class WithIResult : EndpointConfigurationSyncBase
     {
-      public abstract ActionResult<TResponse> Handle();
-    }
-
-    public abstract class WithActionResult : EndpointConfigurationSyncBase
-    {
-      public abstract ActionResult Handle();
+      public abstract IResult Handle();
     }
   }
 }

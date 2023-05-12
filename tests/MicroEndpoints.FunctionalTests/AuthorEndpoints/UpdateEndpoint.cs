@@ -51,7 +51,7 @@ public class UpdateEndpoint : IClassFixture<CustomWebApplicationFactory<App>>
       Name = "Doesn't Matter",
     };
 
-    await _client.PutAndEnsureNotFound(Routes.Authors.Update, new StringContent(JsonConvert.SerializeObject(updatedAuthor), Encoding.UTF8, "application/json"));
+    await _client.PutAndEnsureNotFoundAsync(Routes.Authors.Update, new StringContent(JsonConvert.SerializeObject(updatedAuthor), Encoding.UTF8, "application/json"));
   }
 
   [Fact]
@@ -70,6 +70,6 @@ public class UpdateEndpoint : IClassFixture<CustomWebApplicationFactory<App>>
     var request = _client.PutAsync(Routes.Authors.Update, new StringContent(JsonConvert.SerializeObject(updatedAuthor), Encoding.UTF8, "application/json"), tokenSource.Token);
 
     // Assert
-    await Assert.ThrowsAsync<OperationCanceledException>(async () => await request);
+    await Assert.ThrowsAsync<TaskCanceledException>(async () => await request);
   }
 }

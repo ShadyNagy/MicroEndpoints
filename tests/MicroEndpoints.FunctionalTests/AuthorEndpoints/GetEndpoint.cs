@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Ardalis.HttpClientTestExtensions;
 using MicroEndpoints.FunctionalTests.Models;
 using MicroEndpoints.EndpointApp;
-using Ardalis.HttpClientTestExtensions;
 using MicroEndpoints.EndpointApp.DataAccess;
-using MicroEndpoints.EndpointApp.DomainModel;
+using MicroEndpoints.EndpointApp.Endpoints.Authors;
+using Newtonsoft.Json;
 
 namespace MicroEndpoints.FunctionalTests.AuthorEndpoints;
 
@@ -24,10 +24,11 @@ public class GetEndpoint : IClassFixture<CustomWebApplicationFactory<App>>
     var response = await _client.GetAsync(Routes.Authors.Get(firstAuthor.Id));
     response.EnsureSuccessStatusCode();
     var stringResponse = await response.Content.ReadAsStringAsync();
-    var result = JsonConvert.DeserializeObject<Author>(stringResponse);
 
-    Assert.NotNull(result);
-    Assert.Equal(firstAuthor.Id, result.Id);
+		var result = JsonConvert.DeserializeObject<AuthorResult>(stringResponse);
+
+		Assert.NotNull(result);
+    Assert.Equal(firstAuthor.Id.ToString(), result.Id);
     Assert.Equal(firstAuthor.Name, result.Name);
     Assert.Equal(firstAuthor.PluralsightUrl, result.PluralsightUrl);
     Assert.Equal(firstAuthor.TwitterAlias, result.TwitterAlias);
@@ -39,9 +40,10 @@ public class GetEndpoint : IClassFixture<CustomWebApplicationFactory<App>>
     int invalidId = 9999;
 
     var response = await _client.GetAsync(Routes.Authors.Get(invalidId));
+    var stringResponse = await response.Content.ReadAsStringAsync();
 
     response.EnsureNotFound();
-  }
+	}
 
   [Fact]
   public async Task GivenLongRunningGetRequest_WhenTokenSourceCallsForCancellation_RequestIsTerminated()

@@ -8,9 +8,9 @@ namespace MicroEndpoints.EndpointApp.Endpoints.Authors;
 
 public class ListJsonFile : EndpointBaseAsync
     .WithoutRequest
-    .WithActionResult
+    .WithIResult
 {
-  private readonly IAsyncRepository<Author> _repository;
+  private IAsyncRepository<Author> _repository;
 
   public ListJsonFile(IAsyncRepository<Author> repository)
   {
@@ -21,11 +21,13 @@ public class ListJsonFile : EndpointBaseAsync
   /// List all Authors as a JSON file
   /// </summary>
   [Get("api/authors/Json")]
-  public override async Task<ActionResult> HandleAsync(CancellationToken cancellationToken = default)
+  public override async Task<IResult> HandleAsync([FromServices] IServiceProvider serviceProvider, CancellationToken cancellationToken = default)
   {
-    var result = (await _repository.ListAllAsync(cancellationToken)).ToList();
+	  _repository = serviceProvider.GetService<IAsyncRepository<Author>>()!;
+
+	  var result = (await _repository.ListAllAsync(cancellationToken)).ToList();
 
     var streamData = JsonSerializer.SerializeToUtf8Bytes(result);
-    return File(streamData, "text/json", "authors.json");
+    return Results.File(streamData, "text/json", "authors.json");
   }
 }

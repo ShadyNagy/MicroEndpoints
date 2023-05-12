@@ -8,26 +8,28 @@ namespace MicroEndpoints.EndpointApp.Endpoints.Authors;
 
 public class Create : EndpointBaseAsync
     .WithRequest<CreateAuthorCommand>
-    .WithActionResult
+    .WithIResult
 {
-  private readonly IAsyncRepository<Author> _repository;
-  private readonly IMapper _mapper;
+  private IAsyncRepository<Author> _repository;
+  private IMapper _mapper;
 
-  public Create(IAsyncRepository<Author> repository,
-      IMapper mapper)
+  public Create(IAsyncRepository<Author> repository, IMapper mapper)
   {
     _repository = repository;
     _mapper = mapper;
   }
 
   [Post("api/authors")]
-  public override async Task<ActionResult> HandleAsync([FromBody] CreateAuthorCommand request, CancellationToken cancellationToken = default)
+  public override async Task<IResult> HandleAsync([FromServices] IServiceProvider serviceProvider, [FromBody] CreateAuthorCommand request, CancellationToken cancellationToken = default)
   {
-    var author = new Author();
+	  _repository = serviceProvider.GetService<IAsyncRepository<Author>>()!;
+	  _mapper = serviceProvider.GetService<IMapper>()!;
+
+		var author = new Author();
     _mapper.Map(request, author);
     await _repository.AddAsync(author, cancellationToken);
 
     var result = _mapper.Map<CreateAuthorResult>(author);
-    return CreatedAtRoute("Authors_Get", new { id = result.Id }, result);
+    return Results.CreatedAtRoute("authors_get", new { id = result.Id }, result);
   }
 }

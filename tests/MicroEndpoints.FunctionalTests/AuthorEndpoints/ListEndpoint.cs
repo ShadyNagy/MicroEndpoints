@@ -18,7 +18,7 @@ public class ListEndpoint : IClassFixture<CustomWebApplicationFactory<App>>
   [Fact]
   public async Task ReturnsTwoGivenTwoAuthors()
   {
-    var result = await _client.GetAndDeserialize<IEnumerable<Author>>(Routes.Authors.List());
+    var result = await _client.GetAndDeserializeAsync<IEnumerable<Author>>(Routes.Authors.List());
 
     Assert.NotNull(result);
     Assert.Equal(SeedData.Authors().Count, result.Count());

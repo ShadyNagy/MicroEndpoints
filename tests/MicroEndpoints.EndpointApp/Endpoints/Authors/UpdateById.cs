@@ -8,13 +8,12 @@ namespace MicroEndpoints.EndpointApp.Endpoints.Authors;
 
 public class UpdateById : EndpointBaseAsync
     .WithRequest<UpdateAuthorCommandById>
-    .WithActionResult<UpdatedAuthorByIdResult>
+    .WithIResult
 {
-  private readonly IAsyncRepository<Author> _repository;
-  private readonly IMapper _mapper;
+  private IAsyncRepository<Author> _repository;
+  private IMapper _mapper;
 
-  public UpdateById(IAsyncRepository<Author> repository,
-      IMapper mapper)
+  public UpdateById(IAsyncRepository<Author> repository, IMapper mapper)
   {
     _repository = repository;
     _mapper = mapper;
@@ -24,11 +23,14 @@ public class UpdateById : EndpointBaseAsync
   /// Updates an existing Author
   /// </summary>
   [Put("api/authors/{id}")]
-  public override async Task<ActionResult<UpdatedAuthorByIdResult>> HandleAsync([FromMultiSource]UpdateAuthorCommandById request, CancellationToken cancellationToken = default)
+  public override async Task<IResult> HandleAsync([FromServices] IServiceProvider serviceProvider, [FromMultiSource]UpdateAuthorCommandById request, CancellationToken cancellationToken = default)
   {
-    var author = await _repository.GetByIdAsync(request.Id, cancellationToken);
+	  _repository = serviceProvider.GetService<IAsyncRepository<Author>>()!;
+	  _mapper = serviceProvider.GetService<IMapper>()!;
 
-    if (author is null) return NotFound();
+		var author = await _repository.GetByIdAsync(request.Id, cancellationToken);
+
+    if (author is null) return Results.NotFound();
 
     author.Name = request.Details.Name;
     author.TwitterAlias = request.Details.TwitterAlias;
@@ -36,6 +38,6 @@ public class UpdateById : EndpointBaseAsync
     await _repository.UpdateAsync(author, cancellationToken);
 
     var result = _mapper.Map<UpdatedAuthorByIdResult>(author);
-    return result;
+    return Results.Ok(result);
   }
 }

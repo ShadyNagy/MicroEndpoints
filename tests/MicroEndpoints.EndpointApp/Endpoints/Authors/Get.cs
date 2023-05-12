@@ -8,30 +8,32 @@ namespace MicroEndpoints.EndpointApp.Endpoints.Authors;
 
 public class Get : EndpointBaseAsync
       .WithRequest<int>
-      .WithActionResult<AuthorResult>
+      .WithIResult
 {
-  private readonly IAsyncRepository<Author> _repository;
-  private readonly IMapper _mapper;
+  private IAsyncRepository<Author> _repository;
+  private IMapper _mapper;
 
-  public Get(IAsyncRepository<Author> repository,
-      IMapper mapper)
+  public Get(IAsyncRepository<Author> repository, IMapper mapper)
   {
-    _repository = repository;
-    _mapper = mapper;
+	  _repository = repository;
+	  _mapper = mapper;
   }
 
   /// <summary>
   /// Get a specific Author
   /// </summary>
   [Get("api/authors/{id}")]
-  public override async Task<ActionResult<AuthorResult>> HandleAsync(int id, CancellationToken cancellationToken = default)
+  public override async Task<IResult> HandleAsync([FromServices] IServiceProvider serviceProvider, int id, CancellationToken cancellationToken = default)
   {
-    var author = await _repository.GetByIdAsync(id, cancellationToken);
+	  _repository = serviceProvider.GetService<IAsyncRepository<Author>>()!;
+	  _mapper = serviceProvider.GetService<IMapper>()!;
 
-    if (author is null) return NotFound();
+	  var author = await _repository.GetByIdAsync(id, cancellationToken);
 
-    var result = _mapper.Map<AuthorResult>(author);
+	  if (author is null) return Results.NotFound();
 
-    return result;
+	  var result = _mapper.Map<AuthorResult>(author);
+
+	  return Results.Ok(result);
   }
 }

@@ -8,13 +8,12 @@ namespace MicroEndpoints.EndpointApp.Endpoints.Authors;
 
 public class Update : EndpointBaseAsync
     .WithRequest<UpdateAuthorCommand>
-    .WithActionResult<UpdatedAuthorResult>
+    .WithIResult
 {
-  private readonly IAsyncRepository<Author> _repository;
-  private readonly IMapper _mapper;
+  private IAsyncRepository<Author> _repository;
+  private IMapper _mapper;
 
-  public Update(IAsyncRepository<Author> repository,
-      IMapper mapper)
+  public Update(IAsyncRepository<Author> repository, IMapper mapper)
   {
     _repository = repository;
     _mapper = mapper;
@@ -24,16 +23,19 @@ public class Update : EndpointBaseAsync
   /// Updates an existing Author
   /// </summary>
   [Put("api/authors")]
-  public override async Task<ActionResult<UpdatedAuthorResult>> HandleAsync([FromBody] UpdateAuthorCommand request, CancellationToken cancellationToken = default)
+  public override async Task<IResult> HandleAsync([FromServices] IServiceProvider serviceProvider, [FromBody] UpdateAuthorCommand request, CancellationToken cancellationToken = default)
   {
-    var author = await _repository.GetByIdAsync(request.Id, cancellationToken);
+	  _repository = serviceProvider.GetService<IAsyncRepository<Author>>()!;
+	  _mapper = serviceProvider.GetService<IMapper>()!;
 
-    if (author is null) return NotFound();
+		var author = await _repository.GetByIdAsync(request.Id, cancellationToken);
+
+    if (author is null) return Results.NotFound();
 
     _mapper.Map(request, author);
     await _repository.UpdateAsync(author, cancellationToken);
 
     var result = _mapper.Map<UpdatedAuthorResult>(author);
-    return result;
+    return Results.Ok(result);
   }
 }

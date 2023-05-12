@@ -58,6 +58,6 @@ public class CreateEndpoint : IClassFixture<CustomWebApplicationFactory<App>>
     var request = _client.PostAsync(Routes.Authors.Create, new StringContent(JsonConvert.SerializeObject(newAuthor), Encoding.UTF8, "application/json"), tokenSource.Token);
 
     // Assert
-    await Assert.ThrowsAsync<OperationCanceledException>(async () => await request);
+    await Assert.ThrowsAsync<TaskCanceledException>(async () => await request);
   }
 }
