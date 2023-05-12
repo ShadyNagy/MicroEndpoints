@@ -4,39 +4,88 @@ namespace MicroEndpoints.FluentGenerics;
 
 public static class EndpointBaseSync
 {
-  public static class WithRequest<TRequest>
+	/// <summary>
+	/// Synchronous endpoint configuration with a request.
+	/// </summary>
+	public static class WithRequest<TRequest>
   {
-    public abstract class WithResult<TResponse> : EndpointConfigurationSyncBase
+	  /// <summary>
+	  /// Synchronous endpoint configuration with a request and a response.
+	  /// </summary>
+		public abstract class WithResult<TResponse> : EndpointConfigurationSyncBase
     {
-      public abstract TResponse Handle(TRequest request);
+	    /// <summary>
+	    /// Handles the operation and returns a response.
+	    /// </summary>
+	    /// <param name="request">The request data.</param>
+	    /// <returns>The response data.</returns>
+			public abstract TResponse Handle(TRequest request);
     }
 
-    public abstract class WithoutResult : EndpointConfigurationSyncBase
+	  /// <summary>
+	  /// Synchronous endpoint configuration with a request but without a response.
+	  /// </summary>
+		public abstract class WithoutResult : EndpointConfigurationSyncBase
     {
-      public abstract void Handle(TRequest request);
+	    /// <summary>
+	    /// Handles the operation.
+	    /// </summary>
+	    /// <param name="request">The request data.</param>
+			public abstract void Handle(TRequest request);
     }
 
-    public abstract class WithIResult : EndpointConfigurationSyncBase
+	  /// <summary>
+	  /// Synchronous endpoint configuration with a request and an IResult response.
+	  /// </summary>
+		public abstract class WithIResult : EndpointConfigurationSyncBase
     {
-      public abstract IResult Handle(TRequest request);
+	    /// <summary>
+	    /// Handles the operation and returns an IResult response.
+	    /// </summary>
+	    /// <param name="request">The request data.</param>
+	    /// <returns>The IResult response object.</returns>
+			public abstract IResult Handle(TRequest request);
     }
   }
 
-  public static class WithoutRequest
+	/// <summary>
+	/// Synchronous endpoint configuration without a request.
+	/// </summary>
+	public static class WithoutRequest
   {
-    public abstract class WithResult<TResponse> : EndpointConfigurationSyncBase
+	  /// <summary>
+	  /// Synchronous endpoint configuration without a request but with a response.
+	  /// </summary>
+		public abstract class WithResult<TResponse> : EndpointConfigurationSyncBase
     {
-      public abstract TResponse Handle();
+	    /// <summary>
+	    /// Handles the operation and returns a response.
+	    /// </summary>
+	    /// <returns>The response data.</returns>
+			public abstract TResponse Handle();
     }
 
-    public abstract class WithoutResult : EndpointConfigurationSyncBase
+	  /// <summary>
+	  /// Synchronous endpoint configuration without a request or a response.
+	  /// </summary>
+		public abstract class WithoutResult : EndpointConfigurationSyncBase
     {
-      public abstract void Handle();
+	    /// <summary>
+	    /// Handles the operation.
+	    /// </summary>
+			public abstract void Handle();
     }
 
-    public abstract class WithIResult : EndpointConfigurationSyncBase
+	  /// <summary>
+	  /// Synchronous endpoint configuration without a request but with an IResult response.
+	  /// </summary>
+		public abstract class WithIResult : EndpointConfigurationSyncBase
     {
-      public abstract IResult Handle();
+	    /// <summary>
+	    /// Handles the operation and returns an IResult response.
+	    /// </summary>
+	    /// <returns>The IResult response object.</returns>
+			public abstract IResult Handle();
     }
   }
 }

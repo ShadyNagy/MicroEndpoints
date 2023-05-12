@@ -2,9 +2,11 @@
 using System.Reflection;
 using MicroEndpoints.Interfaces;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MicroEndpoints.FluentGenerics;
 
+[ApiExplorerSettings(IgnoreApi = true)]
 public abstract class EndpointConfigurationBase : IEndpointConfiguration
 {
   protected abstract string HandleName { get; }

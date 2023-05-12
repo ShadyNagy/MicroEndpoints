@@ -2,7 +2,7 @@
 
 namespace MicroEndpoints.Interfaces;
 
-public interface IHttpMethodAttribute
+internal interface IHttpMethodAttribute
 {
   string Template { get; }
   void ConfigureEndpoint(WebApplication app, Delegate requestDelegate);
