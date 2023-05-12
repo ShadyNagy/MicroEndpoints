@@ -14,6 +14,8 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
 builder.Services.AddMicroEndpoints(Assembly.GetAssembly(typeof(Program)));
 
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,7 +34,5 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
-
-app.MapRazorPages();
 
 app.Run();

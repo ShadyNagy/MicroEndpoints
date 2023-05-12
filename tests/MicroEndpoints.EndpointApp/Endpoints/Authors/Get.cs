@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MicroEndpoints.Attributes;
 using MicroEndpoints.FluentGenerics;
 using Microsoft.AspNetCore.Mvc;
 using MicroEndpoints.EndpointApp.DomainModel;
@@ -22,8 +23,8 @@ public class Get : EndpointBaseAsync
   /// <summary>
   /// Get a specific Author
   /// </summary>
-  [HttpGet("api/[namespace]/{id}", Name = "[namespace]_[controller]")]
-  public override async Task<ActionResult<AuthorResult>> HandleAsync(int id, CancellationToken cancellationToken)
+  [Get("api/Authors/{id}")]
+  public override async Task<ActionResult<AuthorResult>> HandleAsync(int id, CancellationToken cancellationToken = default)
   {
     var author = await _repository.GetByIdAsync(id, cancellationToken);
 
