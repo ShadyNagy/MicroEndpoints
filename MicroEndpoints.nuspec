@@ -3,7 +3,7 @@
   <metadata>
     <id>MicroEndpoints</id>
     <title>Micro Endpoints</title>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <authors>Shady Nagy</authors>
     <description>
       MicroEndpoints is a .NET library designed to simplify the process of creating HTTP endpoints. It is built to leverage the power of .NET 6's Minimal APIs, providing an easy and clean approach to building lightweight HTTP APIs. The library offers support for both asynchronous and synchronous endpoint operations, enabling developers to create highly flexible and efficient web services.

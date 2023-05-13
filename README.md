@@ -86,6 +86,19 @@ In this example, `MyAsyncEndpoint` is an asynchronous endpoint that handles a `M
 # Endpoint Results
 
 The result of an endpoint can be of any type. However, it's recommended to use `IResult` for its flexibility and expressiveness. `IResult` allows you to easily produce different HTTP responses.
+```csharp
+public class MyEndpoint : EndpointBaseAsync
+    .WithoutRequest
+    .WithIResult
+{
+  [Get("api/authors")]
+  public override async Task<IResult> HandleAsync(CancellationToken cancellationToken = default)
+  {
+    // Implementation...
+    return Ok();
+  }
+}
+```
 
 If you want to return a custom type, you can do so by specifying the type when inheriting from `EndpointBaseAsync` or `EndpointBaseSync`. Here's an example:
 

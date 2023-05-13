@@ -30,6 +30,6 @@ public class Create : EndpointBaseAsync
     await _repository.AddAsync(author, cancellationToken);
 
     var result = _mapper.Map<CreateAuthorResult>(author);
-    return Results.CreatedAtRoute("authors_get", new { id = result.Id }, result);
+    return CreatedAtRoute("authors_get", new { id = result.Id }, result);
   }
 }

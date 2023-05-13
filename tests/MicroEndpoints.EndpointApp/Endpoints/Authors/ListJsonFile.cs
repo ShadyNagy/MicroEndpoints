@@ -28,6 +28,6 @@ public class ListJsonFile : EndpointBaseAsync
 	  var result = (await _repository.ListAllAsync(cancellationToken)).ToList();
 
     var streamData = JsonSerializer.SerializeToUtf8Bytes(result);
-    return Results.File(streamData, "text/json", "authors.json");
+    return File(streamData, "text/json", "authors.json");
   }
 }

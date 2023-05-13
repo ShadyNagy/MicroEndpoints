@@ -28,11 +28,11 @@ public class Delete : EndpointBaseAsync
 
     if (author is null)
     {
-      return Results.NotFound(id.ToString());
+      return NotFound(id.ToString());
     }
 
     await _repository.DeleteAsync(author, cancellationToken);
 
-    return Results.NoContent();
+    return NoContent();
   }
 }

@@ -30,10 +30,10 @@ public class Get : EndpointBaseAsync
 
 	  var author = await _repository.GetByIdAsync(id, cancellationToken);
 
-	  if (author is null) return Results.NotFound();
+	  if (author is null) return NotFound();
 
 	  var result = _mapper.Map<AuthorResult>(author);
 
-	  return Results.Ok(result);
+	  return Ok(result);
   }
 }

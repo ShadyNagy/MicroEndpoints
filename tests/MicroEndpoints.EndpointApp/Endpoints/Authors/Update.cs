@@ -30,12 +30,12 @@ public class Update : EndpointBaseAsync
 
 		var author = await _repository.GetByIdAsync(request.Id, cancellationToken);
 
-    if (author is null) return Results.NotFound();
+    if (author is null) return NotFound();
 
     _mapper.Map(request, author);
     await _repository.UpdateAsync(author, cancellationToken);
 
     var result = _mapper.Map<UpdatedAuthorResult>(author);
-    return Results.Ok(result);
+    return Ok(result);
   }
 }
